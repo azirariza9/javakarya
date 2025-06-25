@@ -1,0 +1,22 @@
+services:
+  javakarya-db:
+    container_name: javakarya-db
+    image: postgres:alpine
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 2s
+      timeout: 2s
+      retries: 10
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    volumes:
+      - javakarya-volume:/var/lib/postgresql/data
+      - ./database/sql/:/docker-entrypoint-initdb.d:Z
+
+
+volumes:
+  javakarya-volume:
