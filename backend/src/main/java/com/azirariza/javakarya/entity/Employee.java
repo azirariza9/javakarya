@@ -23,7 +23,7 @@ public class Employee {
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @JsonProperty("position")
+    @JsonProperty("position_id")
     @ManyToOne
     @JoinColumn(name = "position_id")
     private Position position;

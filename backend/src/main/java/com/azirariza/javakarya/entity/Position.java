@@ -16,7 +16,7 @@ public class Position {
 
     @JsonProperty("code")
     @Column(unique = true, nullable = false)
-    private int code;
+    private String code;
 
     @JsonProperty("name")
     @Column(nullable = false)
@@ -29,7 +29,7 @@ public class Position {
     public Position() {
     }
 
-    public Position(int id, int code, String name, int isDelete) {
+    public Position(int id, String code, String name, int isDelete) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -44,11 +44,11 @@ public class Position {
         this.id = id;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
