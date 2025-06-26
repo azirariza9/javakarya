@@ -1,9 +1,11 @@
 package com.azirariza.javakarya.service;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.azirariza.javakarya.dao.EmployeeDAO;
+import com.azirariza.javakarya.dto.EmployeeDTO;
 import com.azirariza.javakarya.entity.Employee;
 import com.azirariza.javakarya.repository.EmployeeRepository;
 
@@ -15,17 +17,18 @@ import java.util.Optional;
 @Service
 @Transactional
 public class EmployeeService {
+    private final EmployeeDAO employeeDAO;
     private final EmployeeRepository employeeRepository;
 
-       public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeDAO employeeDAO,EmployeeRepository employeeRepository) {
+        this.employeeDAO = employeeDAO;
         this.employeeRepository = employeeRepository;
     }
 
-    public Page<Employee>getListForPagination(Pageable pageable){
-        return employeeRepository.getListForPagination(pageable);
+    public Page<Employee> getListForPagination(int page, int size) {
+        return employeeRepository.getListForPagination(PageRequest.of(page, size));
     }
 
-  
     public Optional<Employee> getById(int id) {
         return employeeRepository.getActiveById(id);
     }
@@ -34,7 +37,6 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    
     public Employee update(int id, Employee updatedEmployee) {
         return employeeRepository.findById(id)
                 .map(existing -> {
@@ -48,7 +50,11 @@ public class EmployeeService {
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
     }
 
-    public void delete (int id){
+    public void delete(int id) {
         employeeRepository.deleteById(id);
+    }
+
+    public EmployeeDTO getEmployeeWithPositions(int id) {
+        return employeeDAO.getEmployeeWithPositions(id);
     }
 }
