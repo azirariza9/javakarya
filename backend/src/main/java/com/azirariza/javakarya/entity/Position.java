@@ -1,10 +1,13 @@
 package com.azirariza.javakarya.entity;
 
+import org.hibernate.annotations.SQLDelete;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "position")
+@SQLDelete(sql = "UPDATE position SET is_delete = 1 WHERE id = ?")
 public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,9 +4,11 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Table(name = "employee")
+@SQLDelete(sql = "UPDATE employee SET is_delete = 1 WHERE id = ?")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
